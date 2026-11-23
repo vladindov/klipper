@@ -5,6 +5,7 @@
 // This file may be distributed under the terms of the GNU GPLv3 license.
 
 #include <string.h> // memcpy
+#include "autoconf.h" // CONFIG_MACH_ESP32C3
 #include "board/gpio.h" // gpio_out_write
 #include "board/irq.h" // irq_disable
 #include "board/misc.h" // timer_read_time
@@ -211,7 +212,9 @@ command_tmcuart_send(uint32_t *args)
         t->timer.func = tmcuart_send_event;
     }
     irq_disable();
-    t->timer.waketime = timer_read_time() + timer_from_us(200);
+    // Allow more time to enqueue the initial timer on ESP32-C3.
+    uint32_t start_delay_us = CONFIG_MACH_ESP32C3 ? 1000 : 200;
+    t->timer.waketime = timer_read_time() + timer_from_us(start_delay_us);
     sched_add_timer(&t->timer);
     irq_enable();
 }
