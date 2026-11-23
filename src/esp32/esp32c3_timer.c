@@ -64,10 +64,14 @@ void
 esp32_timer_irq(void)
 {
     irq_disable();
+    // The dispatcher can enable IRQs while waiting for a near deadline.
+    // Mask this source until the scheduler and comparator are consistent.
+    REG32(INT_CPU_ENABLE) &= ~BIT32(CPU_INT_SYSTIMER);
     REG32(SYSTIMER_INT_CLEAR) = SYSTIMER_TARGET0_INT;
     uint32_t next = timer_dispatch_many();
     timer_set(next);
-    irq_enable();
+    REG32(INT_CPU_ENABLE) |= BIT32(CPU_INT_SYSTIMER);
+    // The trap return restores the previous global interrupt state.
 }
 
 void
