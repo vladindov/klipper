@@ -2,8 +2,8 @@
 
 This branch builds on XiaoK's experimental Klipper ESP32 port at
 `4df1ad7dea327967f97f7a6cc5a65492ba14cb8f`. It was tested on an ESP32-C3
-Super Mini with silicon revision v0.4 and ERCF Easy BRD v1.1 through a
-custom adapter.
+Super Mini with silicon revision v0.4 installed on the original XIAO header
+pins of an ERCF Easy BRD v1.1.
 
 - Start the first TMC UART timer 1 ms after queuing it on ESP32-C3. The
   UART bit rate stays unchanged.
@@ -37,8 +37,8 @@ make flash FLASH_DEVICE=/dev/ttyACM0
 ```
 
 The ESP32-C3 image uses the chip ROM's direct-boot format and is flashed
-at offset `0x0`. The Super Mini needs the adapter's actual pin mapping
-when connected to Easy BRD. Reserve GPIO18 and GPIO19 for native USB.
+at offset `0x0`. Use the Super Mini's GPIO numbers in the Klipper
+configuration. Reserve GPIO18 and GPIO19 for native USB.
 Use the Espressif device's stable `/dev/serial/by-id/` path as the MCU
 serial setting in Klipper.
 

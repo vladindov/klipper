@@ -1,8 +1,7 @@
 # Klipper for ESP32-C3 and ERCF Easy BRD
 
 This experimental fork lets an ESP32-C3 Super Mini replace the
-Seeeduino XIAO SAMD21 on an ERCF Easy BRD v1.1 by connecting to the
-same header pins through an adapter.
+Seeeduino XIAO SAMD21 on an ERCF Easy BRD v1.1 by using the same header pins.
 The ESP32-C3 connects to the existing Klipper host over USB Serial/JTAG
 and acts as the ERCF's secondary MCU.
 
